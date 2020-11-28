@@ -7,6 +7,7 @@ CLI_PROFILE="dev15-sandbox"
 # Generate a personal access token with repo and admin:repo_hook
 #    permissions from https://github.com/settings/tokens
 GH_ACCESS_TOKEN=$(cat ~/.github/aws-sam-cicd-quickstart/GitHubOAuthToken)
+GH_ACCESS_TOKEN_SECRET_ID='GitHubOAuthToken2'
 GH_OWNER=russomi-labs
 GH_REPO=aws-sam-cicd-quickstart
 GH_BRANCH=master
@@ -27,7 +28,8 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
   --parameter-overrides \
     GitHubOwner=$GH_OWNER \
-    GitHubRepo=$GH_REPO
+    GitHubRepo=$GH_REPO \
+    GitHubOAuthTokenSecretId=$GH_ACCESS_TOKEN_SECRET_ID
 
 # # Package up CloudFormation templates into an S3 bucket
 # echo -e "\n\n=========== Packaging main.yml ==========="
