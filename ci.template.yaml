@@ -78,9 +78,6 @@ Resources:
         Type: !Ref EnvironmentType
       ServiceRole: !GetAtt CodeBuildProjectRole.Arn
       Source:
-        Auth:
-          Resource: !Ref GitHubOAuthToken
-          Type: OAUTH
         GitCloneDepth: 1
         Location: !Sub https://github.com/${GitHubOwner}/${GitHubRepo}.git
         ReportBuildStatus: true
