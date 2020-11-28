@@ -27,8 +27,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
   --parameter-overrides \
     GitHubOwner=$GH_OWNER \
-    GitHubRepo=$GH_REPO \
-    GitHubOAuthToken=$GH_ACCESS_TOKEN
+    GitHubRepo=$GH_REPO
 
 # # Package up CloudFormation templates into an S3 bucket
 # echo -e "\n\n=========== Packaging main.yml ==========="
