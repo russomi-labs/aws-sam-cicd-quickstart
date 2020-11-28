@@ -81,7 +81,7 @@ Resources:
         EnvironmentVariables:
           - Name: PACKAGE_BUCKET
             Value: !Ref Artifacts
-        Image: "aws/codebuild/standard:2.0"
+        Image: aws/codebuild/standard:4.0
         Type: !Ref EnvironmentType
       ServiceRole: !GetAtt CodeBuildProjectRole.Arn
       Source:
