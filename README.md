@@ -119,3 +119,22 @@ aws cloudformation delete-stack --stack-name hello-app
 See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
 
 Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
+
+## Creating a GitHub OAuth token
+
+General instructions for creating a GitHub OAuth token can be found [here](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). When you get to the scopes/permissions page, you should select the "repo" and "admin:repo_hook" scopes, which will automatically select all permissions under those two scopes.
+
+## CI/CD Setup
+
+1. Create a GitHub OAuth token by following the instructions here
+2. Run the following AWS CLI command to save your GitHub OAuth token in AWS Secrets Manager
+
+``` bash
+aws secretsmanager create-secret --name GitHubOAuthToken --secret-string <your github oauth token>
+```
+
+3. Run the following AWS CLI command to deploy the CICD template into your account:
+
+``` bash
+aws cloudformation deploy --template-file <component>/sam/cicd/template.yaml --capabilities CAPABILITY_IAM
+```
