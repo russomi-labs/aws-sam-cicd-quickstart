@@ -143,3 +143,5 @@ Resources:
         SemanticVersion: 1.1.0
       Parameters:
         CodeBuildProjectName: !Ref CodeBuildProject
+        GitHubOAuthToken: !Sub "{{resolve:secretsmanager:${GitHubOAuthTokenSecretId}}}"
+        LogLevel: "DEBUG"
