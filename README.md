@@ -1,4 +1,4 @@
-# hello-app
+# hello-app ![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiaDJyN00zUjJySkxkMEw5aW03N2hBU2EyMzNGZWo4WWN1TGIyY2VVaE12dU9ISUFHSUc0cEhzdU1Nb1ArNGxodjZZMThhNmRGTGZVTFBYNXdtd1V0VzNvPSIsIml2UGFyYW1ldGVyU3BlYyI6IjRVRFljcmxuNEp6bzdyK3UiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
