@@ -144,4 +144,4 @@ Resources:
       Parameters:
         CodeBuildProjectName: !Ref CodeBuildProject
         GitHubOAuthToken: !Sub "{{resolve:secretsmanager:${GitHubOAuthTokenSecretId}}}"
-        LogLevel: "DEBUG"
+        LogLevel: "INFO"
