@@ -138,3 +138,10 @@ aws secretsmanager create-secret --name GitHubOAuthToken --secret-string <your g
 ``` bash
 aws cloudformation deploy --template-file <component>/sam/cicd/template.yaml --capabilities CAPABILITY_IAM
 ```
+
+## Clean up
+
+``` bash
+# delete the cicd stack
+aws cloudformation delete-stack --stack-name aws-sam-cicd-quickstart-ci
+```
