@@ -259,6 +259,7 @@ Add the following `AWS::Serverless::Application` to the `template.yaml` :
 - [Getting started with AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started.html)
 - [CICD for Serverless Applications](https://cicd.serverlessworkshops.io/)
 - [AWS SAM CLI configuration file](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html)
+- [AWS SAM template anatomy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html)
 
 ## What's next
 
@@ -306,6 +307,38 @@ aws secretsmanager create-secret --name GitHubOAuthToken --secret-string <your g
       AuthType: PERSONAL_ACCESS_TOKEN
 ```
 
-### References
+#### References
 
 - [Using dynamic references to specify template values](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/dynamic-references.html#dynamic-references-secretsmanager)
+
+### AWS SAM template anatomy
+
+``` yaml
+
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  set of globals
+
+Description:
+  String
+
+Metadata:
+  template metadata
+
+Parameters:
+  set of parameters
+
+Mappings:
+  set of mappings
+
+Conditions:
+  set of conditions
+
+Resources:
+  set of resources
+
+Outputs:
+  set of outputs
+
+```
