@@ -148,6 +148,10 @@ Configuring SAM deploy
 
 ## Continuous Integration
 
+### Step 1: Add the nested application
+
+Add the following `AWS::Serverless::Application` to the `template.yaml` :
+
 ``` yaml
 
   awssamcodebuildci:
@@ -170,12 +174,81 @@ Configuring SAM deploy
 
 ```
 
+### Step 2: Customize the parameters
+
+- TODO
+
+### Step 3: Deploy
+
+- TODO
+
+### References
+
 - [aws-sam-codebuild-ci](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:646794253159:applications~aws-sam-codebuild-ci)
 - [awslabs/aws-sam-codebuild-ci](https://github.com/awslabs/aws-sam-codebuild-ci)
 
 ## Continuous Deployment
 
+### Step 1: Add the nested application
+
+Add the following `AWS::Serverless::Application` to the `template.yaml` :
+
+``` bash
+
+  awssamcodepipelinecd:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codepipeline-cd
+        SemanticVersion: 1.1.0
+      Parameters:
+        # Relative BuildSpec file path for build stage. For more information, see https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+        # BuildSpecFilePath: 'buildspec.yaml' # Uncomment to override default value
+        # CodeCommit repository branch name, only specify if you chose CodeCommit in SourceCodeProvider.
+        # CodeCommitBranch: 'master' # Uncomment to override default value
+        # CodeCommit repository name, only specify if you chose CodeCommit in SourceCodeProvider
+        # CodeCommitRepo: '' # Uncomment to override default value
+        # AWS CodeBuild project compute type.
+        # ComputeType: 'BUILD_GENERAL1_SMALL' # Uncomment to override default value
+        # Parameter overrides for the deploy stage
+        # DeployParameterOverrides: '{}' # Uncomment to override default value
+        # The IAM role name to deploy the CloudFormation stack. This role needs to be configured to allow cloudformation.amazonaws.com to assume it. Deploy stage will not be added if not specified.
+        # DeployRoleName: '' # Uncomment to override default value
+        # The stack name for the deploy stage
+        # DeployStackName: '' # Uncomment to override default value
+        # Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
+        # EnvironmentType: 'LINUX_CONTAINER' # Uncomment to override default value
+        # GitHub repo branch name. It defaults to master if not specified.
+        # GitHubBranch: 'master' # Uncomment to override default value
+        # OAuth token used by AWS CodePipeline to connect to GitHub
+        # GitHubOAuthToken: '' # Uncomment to override default value
+        # GitHub username owning the repo
+        # GitHubOwner: '' # Uncomment to override default value
+        # GitHub repo name
+        # GitHubRepo: '' # Uncomment to override default value
+        # Relative BuildSpec file path for test stage. For more information, see https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+        # IntegTestBuildSpecFilePath: 'buildspec-integ-test.yaml' # Uncomment to override default value
+        # The IAM role name to deploy a test stack and run integration tests. This role needs to be configured to allow codebuild.amazonaws.com and cloudformation.amazonaws.com to assume it. Test stage will not be added if not specified.
+        # IntegTestRoleName: '' # Uncomment to override default value
+        # Whether to publish the application to AWS Serverless Application Repository
+        # PublishToSAR: 'false' # Uncomment to override default value
+        # Location of your source code repository
+        # SourceCodeProvider: 'GitHub' # Uncomment to override default value
+
+```
+
+### Step 2: Customize the parameters
+
 - TODO
+
+### Step 3: Deploy
+
+- TODO
+
+### References
+
+- [aws-sam-codepipeline-cd](https://console.aws.amazon.com/lambda/home?region=us-east-1#/create/app?applicationId=arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codepipeline-cd)
+- [aws-sam-codepipeline-cd](https://github.com/awslabs/aws-sam-codepipeline-cd/tree/1.1.0)
 
 ## Clean up
 
@@ -193,12 +266,9 @@ Configuring SAM deploy
 
 ## Notes
 
-### [Working Backwards](https://russomi.github.io/2019/09/25/working-backwards/)
+[Working Backwards](https://www.product-frameworks.com/Amazon-Product-Management.html) - Work backwards from the ideal customer end state.
 
-#### Release Notes
-
-#### FAQ
-
-#### User Experience
-
-#### User Manual
+1. Press Release
+2. FAQ
+3. User Experience
+4. User Manual
