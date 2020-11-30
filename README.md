@@ -266,9 +266,46 @@ Add the following `AWS::Serverless::Application` to the `template.yaml` :
 
 ## Notes
 
-[Working Backwards](https://www.product-frameworks.com/Amazon-Product-Management.html) - Work backwards from the ideal customer end state.
+### [Working Backwards](https://www.product-frameworks.com/Amazon-Product-Management.html)
+
+Work backwards from the ideal customer end state.
 
 1. Press Release
 2. FAQ
 3. User Experience
 4. User Manual
+
+### TODO
+
+- [ ] How do we leverage the CD stack to hand CI also?  Just add webhook?
+- [ ] Update template to allow customization of image used for build
+- [ ] Source GitHubOAuthToken via Secrets Manager
+- [ ] Expose Build Log Parameters
+- [ ] Notifications to email and/or slack
+- [ ] AWS Chat Bot
+- [ ] Try skipping Personal Access Token and use OAuth only
+
+### Setting up a Personal Access Token
+
+1. General instructions for creating a GitHub OAuth token can be found [here](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). When you get to the scopes/permissions page, you should select the "repo" and "admin:repo_hook" scopes, which will automatically select all permissions under those two scopes.
+
+2. Run the following AWS CLI command to save your GitHub OAuth token in AWS Secrets Manager
+
+``` bash
+aws secretsmanager create-secret --name GitHubOAuthToken --secret-string <your github oauth token>
+```
+
+3. Use the following secretsmanager dynamic reference to retrieve the secret value that are stored in AWS Secrets Manager for use in your templates.
+
+``` yaml
+  CodeBuildProjectSourceCredential:
+    Type: "AWS::CodeBuild::SourceCredential"
+    Properties:
+      Token: "{{resolve:secretsmanager:GitHubOAuthToken}}"
+      ServerType: GITHUB
+      AuthType: PERSONAL_ACCESS_TOKEN
+```
+
+### References
+
+- [Using dynamic references to specify template values](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/dynamic-references.html#dynamic-references-secretsmanager)
