@@ -148,7 +148,30 @@ Configuring SAM deploy
 
 ## Continuous Integration
 
-- TODO
+``` yaml
+
+  awssamcodebuildci:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codebuild-ci
+        SemanticVersion: 1.0.0
+      Parameters:
+        # AWS CodeBuild project compute type.
+        # ComputeType: 'BUILD_GENERAL1_SMALL' # Uncomment to override default value
+        # Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
+        # EnvironmentType: 'LINUX_CONTAINER' # Uncomment to override default value
+        # OAuth token used by AWS CodeBuild to connect to GitHub
+        GitHubOAuthToken: YOUR_VALUE
+        # GitHub username owning the repo
+        GitHubOwner: YOUR_VALUE
+        # GitHub repo name
+        GitHubRepo: YOUR_VALUE
+
+```
+
+- [aws-sam-codebuild-ci](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:646794253159:applications~aws-sam-codebuild-ci)
+- [awslabs/aws-sam-codebuild-ci](https://github.com/awslabs/aws-sam-codebuild-ci)
 
 ## Continuous Deployment
 
