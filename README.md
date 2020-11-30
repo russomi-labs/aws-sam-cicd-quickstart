@@ -146,8 +146,6 @@ Configuring SAM deploy
         Parameter overrides        : {}
 ```
 
-- [AWS SAM CLI configuration file](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html)
-
 ## Continuous Integration
 
 - TODO
@@ -164,6 +162,7 @@ Configuring SAM deploy
 
 - [Getting started with AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started.html)
 - [CICD for Serverless Applications](https://cicd.serverlessworkshops.io/)
+- [AWS SAM CLI configuration file](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html)
 
 ## What's next
 
