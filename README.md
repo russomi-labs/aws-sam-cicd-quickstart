@@ -1,4 +1,4 @@
-# aws-sam-cicd-quickstart
+# aws-sam-cicd-quickstart ![Build Badge](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoieHBlZ004U0dqdTlrSnlobXlGWDJCY1J6a2Uxc3RlQURyQ0FpMkUzY1NIcFZZbFZqcUJKa0NLcDU4T3dIWXJFUFZCNjlTdWZGajg1eUZMSmsvVk9DSzZJPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9MeXV1cXhpbjlFZFdxam4iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 ## Overview
 
