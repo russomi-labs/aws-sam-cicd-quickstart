@@ -279,9 +279,9 @@ Work backwards from the ideal customer end state.
 ### TODO
 
 - [ ] How do we leverage the CD stack to hand CI also?  Just add webhook?
-- [ ] Update template to allow customization of image used for build
-- [ ] Source GitHubOAuthToken via Secrets Manager
-- [ ] Expose Build Log Parameters
+- [ ] Update template to allow customization of image used for build - aws/codebuild/standard:4.0
+- [x] Source GitHubOAuthToken via Secrets Manager
+- [ ] Are there any Build Log Parameters that need to be exposed?
 - [ ] Notifications to email and/or slack
 - [ ] AWS Chat Bot
 - [ ] Try skipping Personal Access Token and use OAuth only
