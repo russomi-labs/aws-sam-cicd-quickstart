@@ -1,4 +1,6 @@
-# aws-sam-cicd-quickstart ![Build Badge](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoieHBlZ004U0dqdTlrSnlobXlGWDJCY1J6a2Uxc3RlQURyQ0FpMkUzY1NIcFZZbFZqcUJKa0NLcDU4T3dIWXJFUFZCNjlTdWZGajg1eUZMSmsvVk9DSzZJPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9MeXV1cXhpbjlFZFdxam4iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+# aws-sam-cicd-quickstart
+
+![Build Badge](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoieHBlZ004U0dqdTlrSnlobXlGWDJCY1J6a2Uxc3RlQURyQ0FpMkUzY1NIcFZZbFZqcUJKa0NLcDU4T3dIWXJFUFZCNjlTdWZGajg1eUZMSmsvVk9DSzZJPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9MeXV1cXhpbjlFZFdxam4iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 ## Overview
 
@@ -342,3 +344,43 @@ Outputs:
   set of outputs
 
 ```
+
+### Realword-serverless-application
+
+- [Example of main template](https://github.com/russomi-labs/realworld-serverless-application/blob/master/sam/app/template.yaml) that references
+
+nested `AWS::Serverless::Application` s.
+
+- [AWS:: Serverless:: Application](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-application.html)
+- [Using nested applications](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-nested-applications.html)
+
+### Directory Structure src-layout vs. flatt layout
+
+It appearss that the src-layout is the best layout for installable libraries.
+
+#### pyscaffold
+
+> [PyScaffold](https://pyscaffold.org/en/latest/index.html) comes with a lot of elaborated features and configuration defaults
+> to make the most common tasks in developing, maintaining and distributing your
+> own Python package as easy as possible.
+
+``` python
+pip install --upgrade pyscaffold[all]
+putup my-project-name --tox --pyproject --markdown
+```
+
+#### References
+
+https://realpython.com/python-application-layouts/
+https://github.com/pypa/packaging.python.org/issues/320
+https://packaging.python.org/tutorials/packaging-projects/
+https://packaging.python.org/guides/distributing-packages-using-setuptools/
+https://docs.python.org/3/tutorial/modules.html#packages
+https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure
+
+#### Cookiecutter
+
+> [Cookiecutter](https://github.com/cookiecutter/cookiecutter) is a command-line utility that creates projects from cookiecutters (project templates), e.g. Python package projects, VueJS projects.
+
+https://github.com/search?q=org%3Aaws-samples+cookiecutter
+https://github.com/aws-samples/cookiecutter-aws-sam-pipeline
