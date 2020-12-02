@@ -1,14 +1,27 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  hello-app
+  sam-app
 
-  Sample SAM Template for hello-app
+  Sample SAM Template for sam-app
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
+
+# More info about Parameters: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
+Parameters:
+  GitHubOAuthTokenSecretId:
+    Type: String
+    Default: "GitHubOAuthToken"
+    Description: "The name of the secret that contains the GitHubOAuthToken value."
+  GitHubOwner:
+    Type: String
+    Description: "GitHub username or organization that owns the repo."
+  GitHubRepo:
+    Type: String
+    Description: "GitHub repo name."
 
 Resources:
   HelloWorldFunction:
@@ -23,6 +36,24 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+
+  awssamcodebuildci:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codebuild-ci
+        SemanticVersion: 1.0.0
+      Parameters:
+        # AWS CodeBuild project compute type.
+        # ComputeType: 'BUILD_GENERAL1_SMALL' # Uncomment to override default value
+        # Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
+        # EnvironmentType: 'LINUX_CONTAINER' # Uncomment to override default value
+        # OAuth token used by AWS CodeBuild to connect to GitHub
+        GitHubOAuthToken: !Sub "{{resolve:secretsmanager:${GitHubOAuthTokenSecretId}}}"
+        # GitHub username owning the repo
+        GitHubOwner: !Ref GitHubOwner
+        # GitHub repo name
+        GitHubRepo: !Ref GitHubRepo
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

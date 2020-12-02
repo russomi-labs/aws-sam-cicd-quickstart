@@ -1,147 +1,386 @@
-# hello-app ![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiaDJyN00zUjJySkxkMEw5aW03N2hBU2EyMzNGZWo4WWN1TGIyY2VVaE12dU9ISUFHSUc0cEhzdU1Nb1ArNGxodjZZMThhNmRGTGZVTFBYNXdtd1V0VzNvPSIsIml2UGFyYW1ldGVyU3BlYyI6IjRVRFljcmxuNEp6bzdyK3UiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+# aws-sam-cicd-quickstart
 
-This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
+![Build Badge](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoieHBlZ004U0dqdTlrSnlobXlGWDJCY1J6a2Uxc3RlQURyQ0FpMkUzY1NIcFZZbFZqcUJKa0NLcDU4T3dIWXJFUFZCNjlTdWZGajg1eUZMSmsvVk9DSzZJPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9MeXV1cXhpbjlFZFdxam4iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
-- hello_world - Code for the application's Lambda function.
-- events - Invocation events that you can use to invoke the function.
-- tests - Unit tests for the application code.
-- template.yaml - A template that defines the application's AWS resources.
+## Overview
 
-The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
+A quickstart for Serverless Application Model and CI/CD.
 
-If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.
+## Objectives
 
-The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through debugging experience for Lambda function code. See the following links to get started.
+- Initialize a new app
+- Setup Continuous Integration
+- Setup Continuous Deployment
 
-- [PyCharm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-- [IntelliJ](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-- [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
-- [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
+## Prerequisites
 
-## Deploy the sample application
+- [Installing the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+- [Setting up AWS credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-set-up-credentials.html)
 
-The Serverless Application Model Command Line Interface (SAM CLI) is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
+## Initialize a new app
 
-To use the SAM CLI, you need the following tools.
-
-- SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-- [Python 3 installed](https://www.python.org/downloads/)
-- Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
-
-To build and deploy your application for the first time, run the following in your shell:
+### Step 1: Download a sample AWS SAM application
 
 ``` bash
-sam build --use-container
-sam deploy --guided
+
+$ sam init
+
+Which template source would you like to use?
+        1 - AWS Quick Start Templates
+        2 - Custom Template Location
+Choice: 1
+
+Which runtime would you like to use?
+        1 - nodejs12.x
+        2 - python3.8
+        3 - ruby2.7
+        4 - go1.x
+        5 - java11
+        6 - dotnetcore3.1
+        7 - nodejs10.x
+        8 - python3.7
+        9 - python3.6
+        10 - python2.7
+        11 - ruby2.5
+        12 - java8.al2
+        13 - java8
+        14 - dotnetcore2.1
+Runtime: 2
+
+Project name [sam-app]:
+
+Cloning app templates from https://github.com/awslabs/aws-sam-cli-app-templates.git
+
+AWS quick start application templates:
+        1 - Hello World Example
+        2 - EventBridge Hello World
+        3 - EventBridge App from scratch (100+ Event Schemas)
+        4 - Step Functions Sample App (Stock Trader)
+        5 - Elastic File System Sample App
+Template selection: 1
+
+-----------------------
+Generating application:
+-----------------------
+Name: sam-app
+Runtime: python3.8
+Dependency Manager: pip
+Application Template: hello-world
+Output Directory: .
+
+Next steps can be found in the README file at ./sam-app/README.md
 ```
 
-The first command will build the source of your application. The second command will package and deploy your application to AWS, with a series of prompts:
+There are three especially important files:
 
-- **Stack Name**: The name of the stack to deploy to CloudFormation. This should be unique to your account and region, and a good starting point would be something matching your project name.
-- **AWS Region**: The AWS region you want to deploy your app to.
-- **Confirm changes before deploy**: If set to yes, any change sets will be shown to you before execution for manual review. If set to no, the AWS SAM CLI will automatically deploy application changes.
-- **Allow SAM CLI IAM role creation**: Many AWS SAM templates, including this example, create AWS IAM roles required for the AWS Lambda function(s) included to access AWS services. By default, these are scoped down to minimum required permissions. To deploy an AWS CloudFormation stack which creates or modified IAM roles, the `CAPABILITY_IAM` value for `capabilities` must be provided. If permission isn't provided through this prompt, to deploy this example you must explicitly pass `--capabilities CAPABILITY_IAM` to the `sam deploy` command.
-- **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
+- template.yaml: Contains the AWS SAM template that defines your application's AWS resources.
+- hello_world/app.py: Contains your actual Lambda handler logic.
+- hello_world/requirements.txt: Contains any Python dependencies that the application requires, and is used for sam build.
 
-You can find your API Gateway Endpoint URL in the output values displayed after deployment.
-
-## Use the SAM CLI to build and test locally
-
-Build your application with the `sam build --use-container` command.
+### Step 2: Build your application
 
 ``` bash
-hello-app$ sam build --use-container
+
+$ cd sam-app
+$ sam build
+Building codeuri: hello_world/ runtime: python3.8 metadata: {} functions: ['HelloWorldFunction']
+Running PythonPipBuilder:ResolveDependencies
+Running PythonPipBuilder:CopySource
+
+Build Succeeded
+
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+Commands you can use next
+=========================
+[*] Invoke Function: sam local invoke
+[*] Deploy: sam deploy --guided
+
 ```
 
-The SAM CLI installs dependencies defined in `hello_world/requirements.txt` , creates a deployment package, and saves it in the `.aws-sam/build` folder.
-
-Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
-
-Run functions locally and invoke them with the `sam local invoke` command.
+### Step 3: Deploy your application
 
 ``` bash
-hello-app$ sam local invoke HelloWorldFunction --event events/event.json
+
+$ sam deploy --guided
+
+Configuring SAM deploy
+======================
+
+        Looking for config file [samconfig.toml] :  Not found
+
+        Setting default arguments for 'sam deploy'
+        =========================================
+        Stack Name [sam-app]:
+        AWS Region [us-east-1]:
+        # Shows you resources changes to be deployed and require a 'Y' to initiate deploy
+        Confirm changes before deploy [y/N]:
+        # SAM needs permission to be able to create roles to connect to the resources in your template
+        Allow SAM CLI IAM role creation [Y/n]:
+        HelloWorldFunction may not have authorization defined, Is this okay? [y/N]: Y
+        Save arguments to configuration file [Y/n]:
+        SAM configuration file [samconfig.toml]:
+        SAM configuration environment [default]:
+
+        Looking for resources needed for deployment: Not found.
+        Creating the required resources...
+        Successfully created!
+
+                Managed S3 bucket: aws-sam-cli-managed-default-samclisourcebucket-18oyu9s92geto
+                A different default S3 bucket can be set in samconfig.toml
+
+        Saved arguments to config file
+        Running 'sam deploy' for future deployments will use the parameters saved above.
+        The above parameters can be changed by modifying samconfig.toml
+        Learn more about samconfig.toml syntax at
+        https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+
+        Uploading to sam-app/1696cfa0a6a173b9b948ca162eb56c5a  546199 / 546199.0  (100.00%)
+
+        Deploying with following values
+        ===============================
+        Stack name                 : sam-app
+        Region                     : us-east-1
+        Confirm changeset          : False
+        Deployment s3 bucket       : aws-sam-cli-managed-default-samclisourcebucket-18oyu9s92geto
+        Capabilities               : ["CAPABILITY_IAM"]
+        Parameter overrides        : {}
 ```
 
-The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
+## Continuous Integration
 
-``` bash
-hello-app$ sam local start-api
-hello-app$ curl http://localhost:3000/
-```
+### Step 1: Add the nested application
 
-The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
+Add the following `AWS::Serverless::Application` to the `template.yaml` :
 
 ``` yaml
-      Events:
-        HelloWorld:
-          Type: Api
-          Properties:
-            Path: /hello
-            Method: get
+
+  awssamcodebuildci:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codebuild-ci
+        SemanticVersion: 1.0.0
+      Parameters:
+        # AWS CodeBuild project compute type.
+        # ComputeType: 'BUILD_GENERAL1_SMALL' # Uncomment to override default value
+        # Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
+        # EnvironmentType: 'LINUX_CONTAINER' # Uncomment to override default value
+        # OAuth token used by AWS CodeBuild to connect to GitHub
+        GitHubOAuthToken: YOUR_VALUE
+        # GitHub username owning the repo
+        GitHubOwner: YOUR_VALUE
+        # GitHub repo name
+        GitHubRepo: YOUR_VALUE
+
 ```
 
-## Add a resource to your application
+### Step 2: Customize the parameters
 
-The application template uses AWS Serverless Application Model (AWS SAM) to define application resources. AWS SAM is an extension of AWS CloudFormation with a simpler syntax for configuring common serverless application resources such as functions, triggers, and APIs. For resources not included in [the SAM specification](https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md), you can use standard [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) resource types.
+- TODO
 
-## Fetch, tail, and filter Lambda function logs
+### Step 3: Deploy
 
-To simplify troubleshooting, SAM CLI has a command called `sam logs` . `sam logs` lets you fetch logs generated by your deployed Lambda function from the command line. In addition to printing the logs on the terminal, this command has several nifty features to help you quickly find the bug.
+- TODO
 
-`NOTE` : This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
+### References
+
+- [aws-sam-codebuild-ci](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:646794253159:applications~aws-sam-codebuild-ci)
+- [awslabs/aws-sam-codebuild-ci](https://github.com/awslabs/aws-sam-codebuild-ci)
+
+## Continuous Deployment
+
+### Step 1: Add the nested application
+
+Add the following `AWS::Serverless::Application` to the `template.yaml` :
 
 ``` bash
-hello-app$ sam logs -n HelloWorldFunction --stack-name hello-app --tail
+
+  awssamcodepipelinecd:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codepipeline-cd
+        SemanticVersion: 1.1.0
+      Parameters:
+        # Relative BuildSpec file path for build stage. For more information, see https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+        # BuildSpecFilePath: 'buildspec.yaml' # Uncomment to override default value
+        # CodeCommit repository branch name, only specify if you chose CodeCommit in SourceCodeProvider.
+        # CodeCommitBranch: 'master' # Uncomment to override default value
+        # CodeCommit repository name, only specify if you chose CodeCommit in SourceCodeProvider
+        # CodeCommitRepo: '' # Uncomment to override default value
+        # AWS CodeBuild project compute type.
+        # ComputeType: 'BUILD_GENERAL1_SMALL' # Uncomment to override default value
+        # Parameter overrides for the deploy stage
+        # DeployParameterOverrides: '{}' # Uncomment to override default value
+        # The IAM role name to deploy the CloudFormation stack. This role needs to be configured to allow cloudformation.amazonaws.com to assume it. Deploy stage will not be added if not specified.
+        # DeployRoleName: '' # Uncomment to override default value
+        # The stack name for the deploy stage
+        # DeployStackName: '' # Uncomment to override default value
+        # Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
+        # EnvironmentType: 'LINUX_CONTAINER' # Uncomment to override default value
+        # GitHub repo branch name. It defaults to master if not specified.
+        # GitHubBranch: 'master' # Uncomment to override default value
+        # OAuth token used by AWS CodePipeline to connect to GitHub
+        # GitHubOAuthToken: '' # Uncomment to override default value
+        # GitHub username owning the repo
+        # GitHubOwner: '' # Uncomment to override default value
+        # GitHub repo name
+        # GitHubRepo: '' # Uncomment to override default value
+        # Relative BuildSpec file path for test stage. For more information, see https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+        # IntegTestBuildSpecFilePath: 'buildspec-integ-test.yaml' # Uncomment to override default value
+        # The IAM role name to deploy a test stack and run integration tests. This role needs to be configured to allow codebuild.amazonaws.com and cloudformation.amazonaws.com to assume it. Test stage will not be added if not specified.
+        # IntegTestRoleName: '' # Uncomment to override default value
+        # Whether to publish the application to AWS Serverless Application Repository
+        # PublishToSAR: 'false' # Uncomment to override default value
+        # Location of your source code repository
+        # SourceCodeProvider: 'GitHub' # Uncomment to override default value
+
 ```
 
-You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
+### Step 2: Customize the parameters
 
-## Unit tests
+- TODO
 
-Tests are defined in the `tests` folder in this project. Use PIP to install the [pytest](https://docs.pytest.org/en/latest/) and run unit tests.
+### Step 3: Deploy
 
-``` bash
-hello-app$ pip install pytest pytest-mock --user
-hello-app$ python -m pytest tests/ -v
-```
+- TODO
 
-## Cleanup
+### References
 
-To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
+- [aws-sam-codepipeline-cd](https://console.aws.amazon.com/lambda/home?region=us-east-1#/create/app?applicationId=arn:aws:serverlessrepo:us-east-1:646794253159:applications/aws-sam-codepipeline-cd)
+- [aws-sam-codepipeline-cd](https://github.com/awslabs/aws-sam-codepipeline-cd/tree/1.1.0)
 
-``` bash
-aws cloudformation delete-stack --stack-name hello-app
-```
+## Clean up
+
+- TODO
 
 ## Resources
 
-See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
+- [Getting started with AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started.html)
+- [CICD for Serverless Applications](https://cicd.serverlessworkshops.io/)
+- [AWS SAM CLI configuration file](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html)
+- [AWS SAM template anatomy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html)
 
-Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
+## What's next
 
-## Creating a GitHub Personal Access token
+- Learn more ...
 
-General instructions for creating a GitHub OAuth token can be found [here](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). When you get to the scopes/permissions page, you should select the "repo" and "admin:repo_hook" scopes, which will automatically select all permissions under those two scopes.
+## Notes
 
-## CI/CD Setup
+### [Working Backwards](https://www.product-frameworks.com/Amazon-Product-Management.html)
 
-1. Create a GitHub OAuth token by following the instructions here
+Work backwards from the ideal customer end state.
+
+1. Press Release
+2. FAQ
+3. User Experience
+4. User Manual
+
+### TODO
+
+- [ ] How do we leverage the CD stack to hand CI also?  Just add webhook?
+- [ ] Update template to allow customization of image used for build - aws/codebuild/standard:4.0
+- [x] Source GitHubOAuthToken via Secrets Manager
+- [ ] Are there any Build Log Parameters that need to be exposed?
+- [ ] Notifications to email and/or slack
+- [ ] AWS Chat Bot
+- [ ] Try skipping Personal Access Token and use OAuth only
+
+### Setting up a Personal Access Token
+
+1. General instructions for creating a GitHub OAuth token can be found [here](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). When you get to the scopes/permissions page, you should select the "repo" and "admin:repo_hook" scopes, which will automatically select all permissions under those two scopes.
+
 2. Run the following AWS CLI command to save your GitHub OAuth token in AWS Secrets Manager
 
 ``` bash
 aws secretsmanager create-secret --name GitHubOAuthToken --secret-string <your github oauth token>
 ```
 
-3. Run the following AWS CLI command to deploy the CICD template into your account:
+3. Use the following secretsmanager dynamic reference to retrieve the secret value that are stored in AWS Secrets Manager for use in your templates.
 
-``` bash
-aws cloudformation deploy --template-file <component>/sam/cicd/template.yaml --capabilities CAPABILITY_IAM
+``` yaml
+  CodeBuildProjectSourceCredential:
+    Type: "AWS::CodeBuild::SourceCredential"
+    Properties:
+      Token: "{{resolve:secretsmanager:GitHubOAuthToken}}"
+      ServerType: GITHUB
+      AuthType: PERSONAL_ACCESS_TOKEN
 ```
 
-## Clean up
+#### References
 
-``` bash
-# delete the cicd stack
-aws cloudformation delete-stack --stack-name aws-sam-cicd-quickstart-ci
+- [Using dynamic references to specify template values](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/dynamic-references.html#dynamic-references-secretsmanager)
+
+### AWS SAM template anatomy
+
+``` yaml
+
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  set of globals
+
+Description:
+  String
+
+Metadata:
+  template metadata
+
+Parameters:
+  set of parameters
+
+Mappings:
+  set of mappings
+
+Conditions:
+  set of conditions
+
+Resources:
+  set of resources
+
+Outputs:
+  set of outputs
+
 ```
+
+### Realword-serverless-application
+
+- [Example of main template](https://github.com/russomi-labs/realworld-serverless-application/blob/master/sam/app/template.yaml) that references
+
+nested `AWS::Serverless::Application` s.
+
+- [AWS:: Serverless:: Application](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-application.html)
+- [Using nested applications](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-nested-applications.html)
+
+### Directory Structure src-layout vs. flatt layout
+
+It appearss that the src-layout is the best layout for installable libraries.
+
+#### pyscaffold
+
+> [PyScaffold](https://pyscaffold.org/en/latest/index.html) comes with a lot of elaborated features and configuration defaults
+> to make the most common tasks in developing, maintaining and distributing your
+> own Python package as easy as possible.
+
+``` python
+pip install --upgrade pyscaffold[all]
+putup my-project-name --tox --pyproject --markdown
+```
+
+#### References
+
+https://realpython.com/python-application-layouts/
+https://github.com/pypa/packaging.python.org/issues/320
+https://packaging.python.org/tutorials/packaging-projects/
+https://packaging.python.org/guides/distributing-packages-using-setuptools/
+https://docs.python.org/3/tutorial/modules.html#packages
+https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure
+
+#### Cookiecutter
+
+> [Cookiecutter](https://github.com/cookiecutter/cookiecutter) is a command-line utility that creates projects from cookiecutters (project templates), e.g. Python package projects, VueJS projects.
+
+https://github.com/search?q=org%3Aaws-samples+cookiecutter
+https://github.com/aws-samples/cookiecutter-aws-sam-pipeline
